@@ -38,7 +38,7 @@ test('action for DELETE_POST is working', reducerTest(
   { data: [] },
 ));
 
-test('action for ADD_POSTS is working', reducerTest(
+test('action for ADD_RECORDINGS is working', reducerTest(
   recordingReducer,
   { data: [] },
   addRecordings([

@@ -15,7 +15,7 @@ export function addRecording(recording) {
 
 export function addRecordingRequest(recording) {
   return (dispatch) => {
-    return callApi('recordings', 'recording', {
+    return callApi('recordings', 'post', {
       recording: {
         title: recording.title,
         audio: recording.audio,

@@ -2,6 +2,7 @@ import Recording from '../models/recording';
 import cuid from 'cuid';
 import slug from 'limax';
 import sanitizeHtml from 'sanitize-html';
+import blobToBuffer from 'blob-to-buffer'
 
 /**
  * Get all recordings
@@ -25,25 +26,29 @@ export function getRecordings(req, res) {
  * @returns void
  */
 export function addRecording(req, res) {
-  if (!req.body.recording.name || !req.body.recording.title || !req.body.recording.content) {
+  if (!req.body.recording.title || !req.body.recording.audio) {
     res.status(403).end();
   }
 
   const newRecording = new Recording(req.body.recording);
 
-  // Let's sanitize inputs
-  newRecording.title = sanitizeHtml(newRecording.title);
-  newRecording.name = sanitizeHtml(newRecording.name);
-  newRecording.content = sanitizeHtml(newRecording.content);
-
-  newRecording.slug = slug(newRecording.title.toLowerCase(), { lowercase: true });
-  newRecording.cuid = cuid();
-  newRecording.save((err, saved) => {
-    if (err) {
-      res.status(500).send(err);
+  blobToBuffer(newRecording.audio, (conversionError, audioBuffer) => {
+    if (conversionError) {
+      res.status(500).send(conversionError);
+      return
     }
-    res.json({ recording: saved });
-  });
+
+    // Let's sanitize inputs
+    newRecording.title = sanitizeHtml(newRecording.title);
+    newRecording.audio = audioBuffer;
+    newRecording.cuid = cuid();
+    newRecording.save((err, saved) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      res.json({ recording: saved });
+    });
+  })
 }
 
 /**

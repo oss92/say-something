@@ -18,7 +18,7 @@ test('sends the body', t => {
   nock(API_URL)
     .post('/foo', body)
     .reply(200, reply);
-  return callApi('foo', 'recording', body).then(response => {
+  return callApi('foo', 'post', body).then(response => {
     t.deepEqual(response, reply);
   });
 });

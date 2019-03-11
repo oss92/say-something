@@ -53,6 +53,7 @@ function mapStateToProps(state) {
 
 RecordingListPage.propTypes = {
   recordings: PropTypes.arrayOf(PropTypes.shape({
+    cuid: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
   })).isRequired,

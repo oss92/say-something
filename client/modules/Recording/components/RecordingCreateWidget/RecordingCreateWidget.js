@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import Recorder from 'react-mp3-recorder'
 import ReactAudioPlayer from 'react-audio-player'
-import blobToBuffer from 'blob-to-buffer'
 
 // Import Style
 import styles from './RecordingCreateWidget.css';
@@ -11,37 +10,27 @@ import styles from './RecordingCreateWidget.css';
 export class RecordingCreateWidget extends Component {
   addRecording = () => {
     const titleRef = this.refs.title;
-    const contentRef = this.refs.content;
-    if (titleRef.value && this.state.mp3Buffer) {
-      this.props.addRecording(titleRef.value, this.state.mp3Buffer);
+    if (titleRef.value && this.state.mp3Blob) {
+      this.props.addRecording(titleRef.value, this.state.mp3Blob);
       titleRef.value = '';
       this.setState({
-        mp3Buffer: null,
+        mp3Blob: null,
         url: null
       })
     }
   };
 
   _onRecordingComplete = (blob) => {
-    console.log('state', this.state)
+    if (this.state && this.state.url) {
+      window.URL.revokeObjectURL(this.state.url)
+    }
 
-    blobToBuffer(blob, (err, buffer) => {
-      if (err) {
-        console.error(err)
-        return
-      }
-
-      if (this.state && this.state.url) {
-        window.URL.revokeObjectURL(this.state.url)
-      }
-
-      this.setState({
-        mp3Buffer: buffer,
-        url: window.URL.createObjectURL(blob)
-      })
-
-      console.log('state', this.state)
+    this.setState({
+      mp3Blob: blob,
+      url: window.URL.createObjectURL(blob)
     })
+
+    console.log('state', this.state)
   }
 
   _onRecordingError = (err) => {
