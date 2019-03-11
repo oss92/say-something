@@ -1,6 +1,17 @@
+.app-container {
+  	height: 100%;
+}
+
+.flex-container {
+	display: flex;
+  	flex-direction: column;
+  	height: 100%;
+}
+
 .container {
   max-width: 980px;
   width: 100%;
   padding: 15px;
   margin: 0 auto;
+  flex: 1 0 auto;
 }

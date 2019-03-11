@@ -36,9 +36,9 @@ export class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className={styles['app-container']}>
         {this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && <DevTools />}
-        <div>
+        <div className={styles['flex-container']}>
           <Helmet
             title="Speech to Text"
             titleTemplate="%s - Say Something!"
