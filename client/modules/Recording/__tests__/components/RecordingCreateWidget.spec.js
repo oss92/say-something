@@ -16,19 +16,9 @@ test('renders properly', t => {
   );
 
   t.truthy(wrapper.hasClass('form'));
-  t.truthy(wrapper.hasClass('appear'));
   t.truthy(wrapper.find('h2').first().containsMatchingElement(<FormattedMessage id="createNewRecording" />));
   t.is(wrapper.find('input').length, 2);
   t.is(wrapper.find('textarea').length, 1);
-});
-
-test('hide when showAddRecording is false', t => {
-  const wrapper = mountWithIntl(
-    <RecordingCreateWidget {...props} />
-  );
-
-  wrapper.setProps({ showAddRecording: false });
-  t.falsy(wrapper.hasClass('appear'));
 });
 
 test('has correct props', t => {

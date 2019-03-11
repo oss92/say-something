@@ -25,9 +25,9 @@ class RecordingListPage extends Component {
     }
   };
 
-  handleAddRecording = (name, title, content) => {
+  handleAddRecording = (title, audio) => {
     this.props.dispatch(toggleAddRecording());
-    this.props.dispatch(addRecordingRequest({ name, title, content }));
+    this.props.dispatch(addRecordingRequest({ title, audio }));
   };
 
   render() {
