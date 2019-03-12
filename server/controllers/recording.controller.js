@@ -2,7 +2,8 @@ import Recording from '../models/recording';
 import cuid from 'cuid';
 import slug from 'limax';
 import sanitizeHtml from 'sanitize-html';
-import blobToBuffer from 'blob-to-buffer'
+import blobToBuffer from 'blob-to-buffer';
+import logger from '../util/logger';
 
 /**
  * Get all recordings
@@ -30,18 +31,22 @@ export function addRecording(req, res) {
     res.status(403).end();
   }
 
-  const newRecording = new Recording(req.body.recording);
+  logger.debug("recording request body" + req.body.recording);
 
-  blobToBuffer(newRecording.audio, (conversionError, audioBuffer) => {
+  blobToBuffer(req.body.recording.audio, (conversionError, audioBuffer) => {
     if (conversionError) {
       res.status(500).send(conversionError);
       return
     }
 
+    const newRecording = new Recording(req.body.recording);
+
     // Let's sanitize inputs
     newRecording.title = sanitizeHtml(newRecording.title);
     newRecording.audio = audioBuffer;
     newRecording.cuid = cuid();
+
+    logger.debug("recording " + newRecording);
     newRecording.save((err, saved) => {
       if (err) {
         res.status(500).send(err);

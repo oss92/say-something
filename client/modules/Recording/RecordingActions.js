@@ -1,4 +1,5 @@
 import callApi from '../../util/apiCaller';
+import callApiMultipart from '../../util/apiCallerMultipart';
 
 // Export Constants
 export const ADD_RECORDING = 'ADD_RECORDING';
@@ -15,7 +16,7 @@ export function addRecording(recording) {
 
 export function addRecordingRequest(recording) {
   return (dispatch) => {
-    return callApi('recordings', 'post', {
+    return callApiMultipart('recordings', 'post', {
       recording: {
         title: recording.title,
         audio: recording.audio,
