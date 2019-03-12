@@ -47,16 +47,18 @@ export function addRecording(req, res) {
     newRecording.title = sanitizeHtml(fields.title);
     newRecording.audio = fs.readFileSync(files.audio.path);
     newRecording.cuid = cuid();
-    speechToText(files.audio);
+    speechToText(files.audio).then(content => {
+      newRecording.content = content;
+      logger.debug("constructed recording " + newRecording);
 
-    logger.debug("constructed recording " + newRecording);
-
-    newRecording.save((err, saved) => {
-      if (err) {
-        logger.debug("error saving recording " + err);
-        res.status(500).send(err);
-      }
-      res.json({ recording: saved });
+      newRecording.save((err, saved) => {
+        if (err) {
+          logger.error("error saving recording " + err);
+          res.status(500).send(err);
+        }
+        logger.debug("saved recording " + saved);
+        res.json({ recording: saved });
+      });
     });
   })
 }

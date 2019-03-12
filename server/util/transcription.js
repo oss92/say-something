@@ -7,7 +7,7 @@ import fs from 'fs';
 const client = new speech.SpeechClient();
   
 export function speechToText(file) {
-  toWav(file.path)
+  return toWav(file.path)
   .then(outPath => {
     // The audio file's encoding, sample rate in hertz, and BCP-47 language code
     const wavFile = fs.readFileSync(outPath);
@@ -26,7 +26,7 @@ export function speechToText(file) {
     };
 
   // Detects speech in the audio file
-  client
+  return client
     .recognize(request)
     .then(data => {
       const response = data[0];
@@ -34,10 +34,14 @@ export function speechToText(file) {
         .map(result => result.alternatives[0].transcript)
         .join('\n');
       logger.debug(`Transcription: ${transcription}`);
+      return transcription;
     })
     .catch(err => {
-      logger.error('ERROR:', err);
+      logger.error('ERROR converting speech to text:', err);
     });
-  });
+  })
+  .catch(err => {
+    logger.error('ERROR converting to WAV:', err);
+  });;
 
 }
