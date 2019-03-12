@@ -1,6 +1,6 @@
 .header {
-  background: #eee url('../../header-bk.png') center;
-  background-size: cover;
+  background: #eee url('../../header-bk.jpg') center;
+  background-size: inherit;
   border-bottom: 1px solid #ccc;
 }
 
@@ -26,7 +26,7 @@
 .add-recording-button {
   display: inline-block;
   color: #FFF;
-  background: #03A9F4;
+  background: #000;
   padding: 8px 16px;
   text-decoration: none;
   border-radius: 1000px;
