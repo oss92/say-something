@@ -13,7 +13,7 @@ import fs from 'fs';
  * @returns void
  */
 export function getRecordings(req, res) {
-  Recording.find().sort('-dateAdded').exec((err, recordings) => {
+  Recording.find().sort('-created').exec((err, recordings) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -35,7 +35,8 @@ export function addRecording(req, res) {
       return
     }
 
-    if (!req.user) {
+    if (req.user === undefined) {
+      logger.debug("not authorized to add recording");
       res.status(403).end();
       return
     }
@@ -43,6 +44,7 @@ export function addRecording(req, res) {
     if (!fields.title || !files.audio) {
       logger.debug("missing required fields for recording");
       res.status(403).end();
+      return
     }
 
     const newRecording = new Recording({});

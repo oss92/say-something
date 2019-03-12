@@ -7,7 +7,8 @@ const recordingSchema = new Schema({
   audio: { type: 'Buffer', required: true },
   content: { type: 'String', required: false },
   userId: { type: 'String', required: true },
-  done: { type: 'Boolean', required: true, default: false }
+  done: { type: 'Boolean', required: true, default: false },
+  created: { type: 'Date', default: Date.now },
 });
 
 export default mongoose.model('Recording', recordingSchema);

@@ -84,7 +84,7 @@ app.use(oauth.initialize());
 app.use(oauth.session());
 app.get('/auth/facebook', oauth.authenticate('facebook'));
 app.get('/auth/facebook/callback',
-  oauth.authenticate('facebook', { failureRedirect: '/#failed' }),
+  oauth.authenticate('facebook', { session: true, failureRedirect: '/#failed' }),
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/');
