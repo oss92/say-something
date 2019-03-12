@@ -4,6 +4,7 @@ import slug from 'limax';
 import formidable from 'formidable';
 import sanitizeHtml from 'sanitize-html';
 import logger from '../util/logger';
+import { speechToText } from '../util/transcription';
 import fs from 'fs';
 
 /**
@@ -46,6 +47,7 @@ export function addRecording(req, res) {
     newRecording.title = sanitizeHtml(fields.title);
     newRecording.audio = fs.readFileSync(files.audio.path);
     newRecording.cuid = cuid();
+    speechToText(files.audio);
 
     logger.debug("constructed recording " + newRecording);
 
