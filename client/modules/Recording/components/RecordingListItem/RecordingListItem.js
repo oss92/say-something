@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
-import ReactAudioPlayer from 'react-audio-player'
 
 // Import Style
 import styles from './RecordingListItem.css';

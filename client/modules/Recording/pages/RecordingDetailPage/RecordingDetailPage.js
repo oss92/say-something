@@ -41,8 +41,7 @@ function mapStateToProps(state, props) {
 RecordingDetailPage.propTypes = {
   recording: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    audio: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
+    content: PropTypes.string,
     cuid: PropTypes.string.isRequired,
     done: PropTypes.bool.isRequired
   }).isRequired,

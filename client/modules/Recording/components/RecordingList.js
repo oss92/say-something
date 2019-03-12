@@ -24,7 +24,6 @@ RecordingList.propTypes = {
   recordings: PropTypes.arrayOf(PropTypes.shape({
     cuid: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    audio: PropTypes.object.isRequired,
     content: PropTypes.string
   })).isRequired,
   handleDeleteRecording: PropTypes.func.isRequired,
