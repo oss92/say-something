@@ -9,5 +9,7 @@ dist
 coverage/
 .nyc_output/
 yarn.lock
-creds.json
 *.tmp.linear16
+
+creds.json
+.env

@@ -1,6 +1,5 @@
 import Recording from '../models/recording';
 import cuid from 'cuid';
-import slug from 'limax';
 import formidable from 'formidable';
 import sanitizeHtml from 'sanitize-html';
 import logger from '../util/logger';
@@ -36,6 +35,11 @@ export function addRecording(req, res) {
       return
     }
 
+    if (!req.user) {
+      res.status(403).end();
+      return
+    }
+
     if (!fields.title || !files.audio) {
       logger.debug("missing required fields for recording");
       res.status(403).end();
@@ -47,6 +51,7 @@ export function addRecording(req, res) {
     newRecording.title = sanitizeHtml(fields.title);
     newRecording.audio = fs.readFileSync(files.audio.path);
     newRecording.cuid = cuid();
+    newRecording.userId = req.user._id;
     speechToText(files.audio).then(content => {
       newRecording.content = content;
       logger.debug("constructed recording " + newRecording);

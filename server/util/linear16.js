@@ -1,8 +1,6 @@
-'use strict';
-
-const ffmpeg = require('fluent-ffmpeg');
-const ffmpeg_static = require('ffmpeg-static');
-const fs = require('fs');
+import ffmpeg from 'fluent-ffmpeg';
+import ffmpeg_static from 'ffmpeg-static';
+import fs from 'fs';
 
 module.exports = (filePathIn) => new Promise((resolve, reject) => {
     const filePathOut = `${Math.random().toString(36)}.tmp.linear16`

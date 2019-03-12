@@ -1,4 +1,5 @@
 import Express from 'express';
+import cookieSession from 'cookie-session';
 import compression from 'compression';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
@@ -45,7 +46,9 @@ import Helmet from 'react-helmet';
 // Import required modules
 import routes from '../client/routes';
 import { fetchComponentData } from './util/fetchData';
+import oauth from './util/oauth';
 import recordings from './routes/recording.routes';
+import users from './routes/user.routes';
 import dummyData from './dummyData';
 import serverConfig from './config';
 
@@ -70,7 +73,26 @@ app.use(compression());
 app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: true }));
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
+
+// Facebook auth
+app.use(cookieSession({
+  name: 'session',
+  keys: ['secret'],
+  maxAge: 48 * 60 * 60 * 1000 // 48 hours
+}));
+app.use(oauth.initialize());
+app.use(oauth.session());
+app.get('/auth/facebook', oauth.authenticate('facebook'));
+app.get('/auth/facebook/callback',
+  oauth.authenticate('facebook', { failureRedirect: '/#failed' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
+// API
 app.use('/api', recordings);
+app.use('/api', users);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
