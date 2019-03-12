@@ -1,9 +1,10 @@
 import Recording from '../models/recording';
 import cuid from 'cuid';
 import slug from 'limax';
+import formidable from 'formidable';
 import sanitizeHtml from 'sanitize-html';
-import blobToBuffer from 'blob-to-buffer';
 import logger from '../util/logger';
+import fs from 'fs';
 
 /**
  * Get all recordings
@@ -27,28 +28,30 @@ export function getRecordings(req, res) {
  * @returns void
  */
 export function addRecording(req, res) {
-  if (!req.body.recording.title || !req.body.recording.audio) {
-    res.status(403).end();
-  }
-
-  logger.debug("recording request body" + req.body.recording);
-
-  blobToBuffer(req.body.recording.audio, (conversionError, audioBuffer) => {
-    if (conversionError) {
-      res.status(500).send(conversionError);
+  const form = new formidable.IncomingForm();
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      res.status(500).send(err);
       return
     }
 
-    const newRecording = new Recording(req.body.recording);
+    if (!fields.title || !files.audio) {
+      logger.debug("missing required fields for recording");
+      res.status(403).end();
+    }
+
+    const newRecording = new Recording({});
 
     // Let's sanitize inputs
-    newRecording.title = sanitizeHtml(newRecording.title);
-    newRecording.audio = audioBuffer;
+    newRecording.title = sanitizeHtml(fields.title);
+    newRecording.audio = fs.readFileSync(files.audio.path);
     newRecording.cuid = cuid();
 
-    logger.debug("recording " + newRecording);
+    logger.debug("constructed recording " + newRecording);
+
     newRecording.save((err, saved) => {
       if (err) {
+        logger.debug("error saving recording " + err);
         res.status(500).send(err);
       }
       res.json({ recording: saved });

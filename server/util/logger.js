@@ -7,5 +7,4 @@ Logger.useDefaults({
   }
 })
 
-
 export default Logger;

@@ -15,13 +15,11 @@ export function addRecording(recording) {
 }
 
 export function addRecordingRequest(recording) {
+  var form = new FormData();
+  form.append("title", recording.title);
+  form.append("audio", recording.audio);
   return (dispatch) => {
-    return callApiMultipart('recordings', 'post', {
-      recording: {
-        title: recording.title,
-        audio: recording.audio,
-      },
-    }).then(res => dispatch(addRecording(res.recording)));
+    return callApiMultipart('recordings', 'post', form).then(res => dispatch(addRecording(res.recording)));
   };
 }
 

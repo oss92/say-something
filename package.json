@@ -32,7 +32,6 @@
   "license": "MIT",
   "dependencies": {
     "babel-core": "^6.26.0",
-    "blob-to-buffer": "^1.2.8",
     "body-parser": "^1.15.1",
     "compression": "^1.6.2",
     "cross-env": "^1.0.8",
