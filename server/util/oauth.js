@@ -16,7 +16,8 @@ passport.deserializeUser(function(user, done) {
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_SAY_SOMETHING_APP_ID,
     clientSecret: process.env.FACEBOOK_SAY_SOMETHING_APP_SECRET,
-    callbackURL: `${process.env.APP_URL}/auth/facebook/callback`
+    callbackURL: `${process.env.APP_URL}/auth/facebook/callback`,
+    profileFields: ['id', 'emails', 'displayName', 'name']
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({
@@ -30,6 +31,7 @@ passport.use(new FacebookStrategy({
           user = new User({
               name: profile.displayName,
               provider: 'facebook',
+              email: profile.emails[0].value,
               oauthId: profile.id
           });
           user.save(function(err) {

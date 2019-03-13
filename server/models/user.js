@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   name: { type: 'String', required: true },
+  email: { type: 'String', required: true },
   provider: { type: 'String', required: true },
   oauthId: { type: 'String', required: true }
 });

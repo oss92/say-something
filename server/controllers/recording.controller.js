@@ -4,6 +4,7 @@ import formidable from 'formidable';
 import sanitizeHtml from 'sanitize-html';
 import logger from '../util/logger';
 import { speechToText } from '../util/transcription';
+import sendEmail from '../util/mailer';
 import fs from 'fs';
 
 /**
@@ -58,6 +59,7 @@ export function addRecording(req, res) {
       newRecording.content = content;
       logger.debug("constructed recording " + newRecording);
 
+      sendEmail(newRecording.title, newRecording.content, req.user.email, req.user.name)
       newRecording.save((err, saved) => {
         if (err) {
           logger.error("error saving recording " + err);
