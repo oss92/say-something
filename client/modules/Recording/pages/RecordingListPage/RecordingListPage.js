@@ -41,7 +41,7 @@ class RecordingListPage extends Component {
 }
 
 // Actions required to provide data for this component to render in sever side.
-RecordingListPage.need = [() => { return fetchRecordings(); }];
+RecordingListPage.need = [fetchRecordings];
 
 // Retrieve data from store as props
 function mapStateToProps(state) {

@@ -2,6 +2,7 @@ export default {
   locale: 'en',
   messages: {
     siteTitle: 'Say Something!',
+    loginWithFacebook: 'Continue with Facebook',
     addRecording: 'Add Recording',
     switchLanguage: 'Switch Language',
     twitterMessage: 'We are on Twitter',

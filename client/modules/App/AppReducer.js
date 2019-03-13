@@ -1,5 +1,5 @@
 // Import Actions
-import { TOGGLE_ADD_RECORDING } from './AppActions';
+import { TOGGLE_ADD_RECORDING, TOGGLE_LOGGED_IN } from './AppActions';
 
 // Initial State
 const initialState = {
@@ -13,6 +13,11 @@ const AppReducer = (state = initialState, action) => {
         showAddRecording: !state.showAddRecording,
       };
 
+    case TOGGLE_LOGGED_IN:
+      return {
+        loggedIn: !state.loggedIn,
+      };
+
     default:
       return state;
   }
@@ -22,6 +27,9 @@ const AppReducer = (state = initialState, action) => {
 
 // Get showAddRecording
 export const getShowAddRecording = state => state.app.showAddRecording;
+
+// Get getLoggedIn
+export const getLoggedIn = state => state.app.loggedIn;
 
 // Export Reducer
 export default AppReducer;

@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import path from 'path';
 import IntlWrapper from '../client/modules/Intl/IntlWrapper';
+import logger from './util/logger'
 
 // Initialize the Express App and authentication
 const app = new Express();
@@ -66,7 +67,7 @@ mongoose.Promise = global.Promise;
 if (process.env.NODE_ENV !== 'test') {
   mongoose.connect(serverConfig.mongoURL, (error) => {
     if (error) {
-      console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
+      logger.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
       throw error;
     }
 
@@ -178,7 +179,7 @@ app.use((req, res, next) => {
 // start app
 app.listen(serverConfig.port, (error) => {
   if (!error) {
-    console.log(`[Say Something!] is running on port: ${serverConfig.port}! Say something!`); // eslint-disable-line
+    logger.info(`[Say Something!] is running on port: ${serverConfig.port}! Say something!`); // eslint-disable-line
   }
 });
 

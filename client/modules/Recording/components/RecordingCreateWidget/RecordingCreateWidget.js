@@ -29,8 +29,6 @@ export class RecordingCreateWidget extends Component {
       mp3Blob: blob,
       url: window.URL.createObjectURL(blob)
     })
-
-    console.log('state', this.state)
   }
 
   _onRecordingError = (err) => {
@@ -38,7 +36,7 @@ export class RecordingCreateWidget extends Component {
   }
 
   render() {
-    const cls = `${styles.form} ${(this.props.showAddRecording ? styles.appear : '')}`;
+    const cls = styles.form;
     return (
       <div className={cls}>
         <div className={styles['form-content']}>

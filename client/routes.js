@@ -16,6 +16,7 @@ if (typeof require.ensure !== 'function') {
  */
 if (process.env.NODE_ENV !== 'production') {
   // Require async routes only in development for react-hot-reloader to work.
+  require('./modules/Main/pages/HomePage/HomePage');
   require('./modules/Recording/pages/RecordingListPage/RecordingListPage');
   require('./modules/Recording/pages/RecordingDetailPage/RecordingDetailPage');
 }
@@ -25,6 +26,14 @@ if (process.env.NODE_ENV !== 'production') {
 export default (
   <Route path="/" component={App}>
     <IndexRoute
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Main/pages/HomePage/HomePage').default);
+        });
+      }}
+    />
+    <Route
+      path="/recordings"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Recording/pages/RecordingListPage/RecordingListPage').default);
