@@ -3,7 +3,7 @@ import logger from '../util/logger';
 import { speechToText } from '../util/transcription';
 import sendEmail from '../util/mailer';
 
-export default function speechToTextFlow(recordingCuid, audioFile, user) {
+export default function transcribeRecordingFlow(recordingCuid, audioFile, userName, userEmail) {
   speechToText(audioFile).then(content => {
   	Recording.findOne({ cuid: recordingCuid }).exec((err, recording) => {
 	    if (err) {
@@ -17,7 +17,10 @@ export default function speechToTextFlow(recordingCuid, audioFile, user) {
         }
 
         logger.debug(`saved recording ${saved}`);
-        sendEmail(recording.title, recording.content, user.email, user.name);
+        if (userEmail) {
+          logger.debug(`sending email to: ${userEmail}`)
+          sendEmail(recording.title, recording.content, userEmail, userName);
+        }
       });
 	  });      
   });

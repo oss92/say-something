@@ -3,6 +3,8 @@ export default {
   messages: {
     siteTitle: 'Say Something!',
     loginWithFacebook: 'Continue with Facebook',
+    continueAsGuest: 'Continue as guest',
+    guestConsequence: 'public recordings and no email report',
     addRecording: 'Add Recording',
     switchLanguage: 'Switch Language',
     twitterMessage: 'We are on Twitter',

@@ -6,6 +6,8 @@ import logger from '../util/logger';
 import transcribeRecording from '../flows/transcribeRecordingFlow';
 import fs from 'fs';
 
+const GUEST_NAME = 'Guest';
+
 /**
  * Get all recordings
  * @param req
@@ -13,12 +15,9 @@ import fs from 'fs';
  * @returns void
  */
 export function getRecordings(req, res) {
-  if (req.user == undefined) {
-    // TODO better handling
-    res.json({ recordings: [] });
-    return;
-  }
-  Recording.find({ userId: req.user.id }).sort('-created').exec((err, recordings) => {
+  // Guest recordings are public
+  const userIdOrGuest = req.user ? { userId: req.user.id } : { userId: { $exists: false } }
+  Recording.find(userIdOrGuest).sort('-created').exec((err, recordings) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -40,12 +39,6 @@ export function addRecording(req, res) {
       return
     }
 
-    if (req.user === undefined) {
-      logger.debug("not authorized to add recording");
-      res.status(403).end();
-      return
-    }
-
     if (!fields.title || !files.audio) {
       logger.debug("missing required fields for recording");
       res.status(403).end();
@@ -58,16 +51,21 @@ export function addRecording(req, res) {
     newRecording.title = sanitizeHtml(fields.title);
     newRecording.audio = fs.readFileSync(files.audio.path);
     newRecording.cuid = cuid();
-    newRecording.userId = req.user._id;
-    newRecording.userName = req.user.name;
+    if (req.user) {
+      newRecording.userId = req.user._id;
+      newRecording.userName = req.user.name;
+    } else {
+      newRecording.userName = GUEST_NAME;
+    }
     logger.debug(`constructed recording ${newRecording}`);
     newRecording.save((err, saved) => {
       if (err) {
         logger.error("error saving recording " + err);
         res.status(500).send(err);
+        return
       }
       logger.debug("saved recording " + saved);
-      transcribeRecording(saved.cuid, files.audio, req.user);
+      transcribeRecording(saved.cuid, files.audio, saved.name, req.user ? req.user.email : null);
       res.json({ recording: saved });
     });
   })

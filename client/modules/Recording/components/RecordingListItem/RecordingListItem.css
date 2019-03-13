@@ -4,6 +4,16 @@
   border-radius: 2px;
 }
 
+.single-recording-status {
+  width: 10%;
+  display: inline-block;
+}
+
+.single-recording-data {
+  width: 90%;
+  display: inline-block;
+}
+
 .recording-title{
   font-size: 28px;
   margin-bottom: 16px;

@@ -12,9 +12,11 @@ export class UserProfileOverview extends Component {
   render() {
     return (
       <div className={styles['profile']}>
-        <p className={styles['profile-user-name']}>{this.props.userProfile.name}</p>
-        <p className={styles['profile-user-email']}>{this.props.userProfile.email}</p>
-        <a href="/recordings">{"My recordings"}</a>
+        <div className={styles['profile-info']}>
+          <p className={styles['profile-user-name']}>{this.props.userProfile.name}</p>
+          <p className={styles['profile-user-email']}>{this.props.userProfile.email}</p>
+        </div>
+        <a className={styles['my-recordings-button']} href="/recordings">{"My recordings"}</a>
       </div>
     );
   }
