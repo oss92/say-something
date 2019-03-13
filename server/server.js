@@ -90,6 +90,10 @@ app.get('/auth/facebook/callback',
     // Successful authentication, redirect home.
     res.redirect('/');
   });
+app.get('/auth/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
 
 // API
 app.use('/api', recordings);

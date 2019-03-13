@@ -17,6 +17,7 @@ export class UserProfileOverview extends Component {
           <p className={styles['profile-user-email']}>{this.props.userProfile.email}</p>
         </div>
         <a className={styles['my-recordings-button']} href="/recordings">{"My recordings"}</a>
+        <a className={styles['logout-button']} href="/auth/logout">{this.props.intl.messages.logout}</a>
       </div>
     );
   }
