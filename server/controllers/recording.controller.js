@@ -60,6 +60,7 @@ export function addRecording(req, res) {
     newRecording.audio = fs.readFileSync(files.audio.path);
     newRecording.cuid = cuid();
     newRecording.userId = req.user._id;
+    newRecording.userName = req.user.name;
     speechToText(files.audio).then(content => {
       newRecording.content = content;
       logger.debug("constructed recording " + newRecording);

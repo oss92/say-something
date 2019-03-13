@@ -14,7 +14,7 @@ function RecordingListItem(props) {
           {props.recording.title}
         </Link>
       </h3>
-      <p className={styles['author-name']}><FormattedMessage id="by" /> Guest</p>
+      <p className={styles['author-name']}><FormattedMessage id="by" /> {props.recording.userName}</p>
       <p className={styles['recording-desc']}>{props.recording.content}</p>
       <p className={styles['recording-action']}><a href="#" onClick={props.onDelete}><FormattedMessage id="deleteRecording" /></a></p>
       <hr className={styles.divider} />
@@ -26,8 +26,10 @@ RecordingListItem.propTypes = {
   recording: PropTypes.shape({
     cuid: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    userName: PropTypes.string.isRequired,
     audio: PropTypes.object.isRequired,
-    content: PropTypes.string
+    content: PropTypes.string,
+    done: PropTypes.bool.isRequired
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
 };

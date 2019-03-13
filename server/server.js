@@ -1,4 +1,5 @@
 import Express from 'express';
+import oauth from './util/oauth';
 import cookieSession from 'cookie-session';
 import compression from 'compression';
 import mongoose from 'mongoose';
@@ -6,8 +7,15 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import IntlWrapper from '../client/modules/Intl/IntlWrapper';
 
-// Initialize the Express App
+// Initialize the Express App and authentication
 const app = new Express();
+app.use(cookieSession({
+  name: 'session',
+  keys: ['secret'],
+  maxAge: 48 * 60 * 60 * 1000 // 48 hours
+}));
+app.use(oauth.initialize());
+app.use(oauth.session());
 
 // Set Development modes checks
 const isDevMode = process.env.NODE_ENV === 'development' || false;
@@ -46,7 +54,6 @@ import Helmet from 'react-helmet';
 // Import required modules
 import routes from '../client/routes';
 import { fetchComponentData } from './util/fetchData';
-import oauth from './util/oauth';
 import recordings from './routes/recording.routes';
 import users from './routes/user.routes';
 import dummyData from './dummyData';
@@ -75,13 +82,6 @@ app.use(bodyParser.urlencoded({ limit: '20mb', extended: true }));
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
 
 // Facebook auth
-app.use(cookieSession({
-  name: 'session',
-  keys: ['secret'],
-  maxAge: 48 * 60 * 60 * 1000 // 48 hours
-}));
-app.use(oauth.initialize());
-app.use(oauth.session());
 app.get('/auth/facebook', oauth.authenticate('facebook', { scope : ['email'] }));
 app.get('/auth/facebook/callback',
   oauth.authenticate('facebook', { failureRedirect: '/#failed' }),
