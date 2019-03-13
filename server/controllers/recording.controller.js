@@ -14,7 +14,12 @@ import fs from 'fs';
  * @returns void
  */
 export function getRecordings(req, res) {
-  Recording.find().sort('-created').exec((err, recordings) => {
+  if (req.user == undefined) {
+    // TODO better handling
+    res.json({ recordings: [] });
+    return;
+  }
+  Recording.find({ userId: req.user.id }).sort('-created').exec((err, recordings) => {
     if (err) {
       res.status(500).send(err);
     }

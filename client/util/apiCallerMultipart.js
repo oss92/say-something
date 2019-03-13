@@ -5,7 +5,7 @@ export const API_URL = (typeof window === 'undefined' || process.env.NODE_ENV ==
   process.env.BASE_URL || (`http://localhost:${process.env.PORT || Config.port}/api`) :
   '/api';
 
-export default function callApiMultipart(endpoint, method = 'post', formData) {
+export default function callApiMultipart(endpoint, method = 'get', formData) {
   return fetch(`${API_URL}/${endpoint}`, {
     method,
     body: formData,
