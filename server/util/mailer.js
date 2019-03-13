@@ -4,7 +4,7 @@ const mandrillClient = new mandrill.Mandrill(process.env.MANDRILL_API_KEY);
 
 export default function sendEmail(title, transcription, recipientEmail, recipientName) {
 	var message = {
-    "text": transcription,
+    "text": `Dear ${recipientName},\nWe are done processing your transcription\n\n\n${transcription}\n\nCheers,\nSay Something!`,
     "subject": `Transcription results: ${title}`,
     "from_email": "saysomething@ossterdam.com",
     "from_name": "Say Something",

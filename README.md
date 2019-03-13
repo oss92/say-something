@@ -7,6 +7,16 @@
   npm start
 ```
 
+## Environment Variables
+You will need to set the following environment variables for the application to work as expected
+```bash
+APP_URL=http://localhost:8000
+GOOGLE_APPLICATION_CREDENTIALS=/path/to/creds.json
+FACEBOOK_SAY_SOMETHING_APP_ID=00000000000000000
+FACEBOOK_SAY_SOMETHING_APP_SECRET=xxxxxxxxxxxxxxxxxxxxxx
+MANDRILL_API_KEY=xxxxxxxxxxxx
+```
+
 **Note : Please make sure your MongoDB is running.** For MongoDB installation guide see [this](https://docs.mongodb.org/v3.0/installation/). Also `npm6` is required to install dependencies properly.
 
 ## Available Commands
