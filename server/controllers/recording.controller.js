@@ -3,8 +3,7 @@ import cuid from 'cuid';
 import formidable from 'formidable';
 import sanitizeHtml from 'sanitize-html';
 import logger from '../util/logger';
-import { speechToText } from '../util/transcription';
-import sendEmail from '../util/mailer';
+import transcribeRecording from '../flows/transcribeRecordingFlow';
 import fs from 'fs';
 
 /**
@@ -61,19 +60,15 @@ export function addRecording(req, res) {
     newRecording.cuid = cuid();
     newRecording.userId = req.user._id;
     newRecording.userName = req.user.name;
-    speechToText(files.audio).then(content => {
-      newRecording.content = content;
-      logger.debug("constructed recording " + newRecording);
-
-      sendEmail(newRecording.title, newRecording.content, req.user.email, req.user.name)
-      newRecording.save((err, saved) => {
-        if (err) {
-          logger.error("error saving recording " + err);
-          res.status(500).send(err);
-        }
-        logger.debug("saved recording " + saved);
-        res.json({ recording: saved });
-      });
+    logger.debug(`constructed recording ${newRecording}`);
+    newRecording.save((err, saved) => {
+      if (err) {
+        logger.error("error saving recording " + err);
+        res.status(500).send(err);
+      }
+      logger.debug("saved recording " + saved);
+      transcribeRecording(saved.cuid, files.audio, req.user);
+      res.json({ recording: saved });
     });
   })
 }
