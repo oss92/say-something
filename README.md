@@ -1,5 +1,11 @@
 # Say Something!
 
+## TODO
+- [ ] Recodings > 60 seconds (save job ID to DB and poll)
+- [ ] Increase test coverage
+- [ ] Background job processing
+- [ ] Web Socket updates
+
 ## Quickstart
 
 ```sh
