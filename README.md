@@ -7,6 +7,11 @@
   npm start
 ```
 
+## Requirements
+- [Google Application Credentials](https://console.cloud.google.com/apis/credentials/serviceaccountkey)
+- Facebook App
+- [Mandrill](https://mandrillapp.com) Account
+
 ## Environment Variables
 You will need to set the following environment variables for the application to work as expected
 ```bash

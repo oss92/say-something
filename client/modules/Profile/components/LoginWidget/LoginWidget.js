@@ -13,6 +13,7 @@ export class LoginWidget extends Component {
     return (
       <div className={styles['login']}>
         <a className={styles['fb-login-button']} href="/auth/facebook">{this.props.intl.messages.loginWithFacebook}</a>
+        <p className={styles['continue-guest-consequence']}>{this.props.intl.messages.loginConsequence}</p>
         <a className={styles['continue-guest-button']} href="/recordings">{this.props.intl.messages.continueAsGuest}</a>
         <p className={styles['continue-guest-consequence']}>{this.props.intl.messages.guestConsequence}</p>
       </div>

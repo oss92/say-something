@@ -6,6 +6,7 @@ export default {
     logout: 'Log out',
     continueAsGuest: 'Continue as guest',
     guestConsequence: 'recordings will be public and no email report on transcription success',
+    loginConsequence: 'control your recordings and receive an email with results',
     addRecording: 'Add Recording',
     switchLanguage: 'Switch Language',
     twitterMessage: 'We are on Twitter',

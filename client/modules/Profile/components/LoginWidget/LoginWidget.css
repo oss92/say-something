@@ -7,7 +7,7 @@
 
 .fb-login-button {
   display: block;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   font-family: 'Lato', sans-serif;
   background: #3C5A99;
   font-size: 16px;
@@ -48,4 +48,5 @@
 .continue-guest-consequence {
   color: #D0D0D0;
   font-size: 12px;
+  margin-bottom: 8px;
 }

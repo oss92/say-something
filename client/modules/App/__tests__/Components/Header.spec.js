@@ -13,7 +13,7 @@ test('renders the header properly', t => {
     isActive: sinon.stub().returns(true),
   };
   const wrapper = shallow(
-    <Header switchLanguage={() => {}} intl={intlProp} toggleAddRecoring={() => {}} />,
+    <Header switchLanguage={() => {}} intl={intlProp} toggleAddRecording={() => {}} />,
     {
       context: {
         router,
@@ -30,7 +30,7 @@ test('doesn\'t add recording in pages other than home', t => {
     isActive: sinon.stub().returns(false),
   };
   const wrapper = shallow(
-    <Header switchLanguage={() => {}} intl={intlProp} toggleAddRecoring={() => {}} />,
+    <Header switchLanguage={() => {}} intl={intlProp} toggleAddRecording={() => {}} />,
     {
       context: {
         router,
