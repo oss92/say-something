@@ -5,7 +5,7 @@ export default {
     loginWithFacebook: 'Continue with Facebook',
     logout: 'Log out',
     continueAsGuest: 'Continue as guest',
-    guestConsequence: 'public recordings and no email report',
+    guestConsequence: 'recordings will be public and no email report on transcription success',
     addRecording: 'Add Recording',
     switchLanguage: 'Switch Language',
     twitterMessage: 'We are on Twitter',

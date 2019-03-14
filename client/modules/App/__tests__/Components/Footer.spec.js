@@ -9,5 +9,5 @@ test('renders the footer properly', t => {
   );
 
   t.is(wrapper.find('p').length, 2);
-  t.is(wrapper.find('p').first().text(), '© 2019 · Ossterdam');
+  t.is(wrapper.find('p').first().text(), '© 2019 · Ossterdam ');
 });

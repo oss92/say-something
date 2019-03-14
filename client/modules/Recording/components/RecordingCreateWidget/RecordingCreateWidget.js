@@ -8,6 +8,14 @@ import ReactAudioPlayer from 'react-audio-player'
 import styles from './RecordingCreateWidget.css';
 
 export class RecordingCreateWidget extends Component {
+
+  componentDidMount() {
+    this.setState({
+      mp3Blob: null,
+      url: null
+    })
+  }
+
   addRecording = () => {
     const titleRef = this.refs.title;
     if (titleRef.value && this.state.mp3Blob) {
