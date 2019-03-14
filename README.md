@@ -1,10 +1,15 @@
 # Say Something!
 
+<img width="1911" alt="Screen Shot 2019-03-14 at 13 13 01" src="https://user-images.githubusercontent.com/6284234/54356059-f9980000-465a-11e9-86b6-921071d074a0.png">
+<img width="1914" alt="Screen Shot 2019-03-14 at 13 02 03" src="https://user-images.githubusercontent.com/6284234/54356065-fbfa5a00-465a-11e9-9a2c-1847f0ba4cd0.png">
+
 ## TODO
 - [ ] Recodings > 60 seconds (save job ID to DB and poll)
 - [ ] Increase test coverage
 - [ ] Background job processing
 - [ ] Web Socket updates
+
+
 
 ## Quickstart
 
